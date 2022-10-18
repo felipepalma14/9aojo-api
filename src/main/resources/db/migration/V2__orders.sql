@@ -8,17 +8,20 @@ create table order_location
 );
 
 
-CREATE TABLE `orders` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `operator_id` bigint NOT NULL,
-  `end_order_location_id` bigint DEFAULT NULL,
-  `start_order_location_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_end_order_id` (`end_order_location_id`),
-  KEY `FK_start_order_id` (`start_order_location_id`),
-  CONSTRAINT `FK_end_order_id` FOREIGN KEY (`end_order_location_id`) REFERENCES `order_location` (`id`),
-  CONSTRAINT `FK_start_order_id` FOREIGN KEY (`start_order_location_id`) REFERENCES `order_location` (`id`)
+
+create table orders
+(
+    id                      bigint auto_increment
+        primary key,
+    operator_id             bigint not null,
+    end_order_location_id   bigint null,
+    start_order_location_id bigint null,
+    constraint FK_end_order_id
+        foreign key (end_order_location_id) references order_location (id),
+    constraint FK_start_order_id
+        foreign key (start_order_location_id) references order_location (id)
 );
+
 
 create table orders_assists
 (
@@ -29,4 +32,3 @@ create table orders_assists
     constraint FK_assist_id_orders_assists
         foreign key (assists_id) references assistances (id)
 );
-
