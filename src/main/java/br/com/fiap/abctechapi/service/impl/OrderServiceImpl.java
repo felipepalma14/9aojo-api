@@ -31,12 +31,8 @@ public class OrderServiceImpl implements OrderService {
     public void saveOrder(Order order, List<Long> arrayAssists) throws Exception {
         ArrayList<Assistance> assistances = new ArrayList<>();
         arrayAssists.forEach( i -> {
-            Optional<Assistance> assistance = assistanceRepository.findById(i);
-            if(!assistance.isPresent()){
-//                throw new Not();
-            }
-            assistances.add(assistance.get());
-
+            Assistance assistance = assistanceRepository.findById(i).orElseThrow();
+            assistances.add(assistance);
         });
 
         order.setAssists(assistances);
